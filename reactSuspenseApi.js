@@ -19,19 +19,17 @@ import { Suspense, useState, useEffect } from 'react';
 
 
 const SuspensefulUserProfile = ({ userId }) => {
-  //const [data, setData] = useState({});
-  const resource = fetchUserProfile(userId);
-  const data = resource.profile.read();
-  //useEffect(() => {
-  //  fetchUserProfile(userId).then((profile) => setData(profile));
-  //}, [userId, setData])
   return (
-    <Suspense>
-      <UserProfile data={data} />
+    <Suspense fallback={<h1>Loading profile...</h1>}>
+      <UserProfile userId={userId} />
     </Suspense>
   );
 };
-const UserProfile = ({ data }) => {
+const UserProfile = ({ userId }) => {
+  const [data, setData] = useState({});
+  useEffect(() => {
+    fetchUserProfile(userId).then((profile) => setData(profile));
+  }, [])
   return (
     <>
       <h1>{data.name}</h1>
