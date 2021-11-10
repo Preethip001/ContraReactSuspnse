@@ -17,7 +17,8 @@
 import { Suspense, useState, useEffect } from 'react';
 
 
-
+//userId is passed to the UserProfile component where the data is fetched
+//fallback component to be included
 const SuspensefulUserProfile = ({ userId }) => {
   return (
     <Suspense fallback={<h1>Loading profile...</h1>}>
@@ -30,6 +31,7 @@ const UserProfile = ({ userId }) => {
   useEffect(() => {
     fetchUserProfile(userId).then((profile) => setData(profile));
   }, [])
+  //userId and setData cannot go into useEffect variables array
   return (
     <>
       <h1>{data.name}</h1>
